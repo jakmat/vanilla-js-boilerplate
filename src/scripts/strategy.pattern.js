@@ -1,55 +1,71 @@
+/**
+ * Strategy Pattern DEMO
+ * ------------------------
+ * Article: https://medium.com/better-programming/design-patterns-using-the-strategy-pattern-in-javascript-3c12af58fd8a
+ */
+
+// Interface
 class StrategyManager {
   constructor() {
-    this._strategy = null;
+    this._strategies = [];
   }
-  set strategy(strategy) {
-    this._strategy = strategy;
+  addStrategy(strategy) {
+    this._strategies = [...this._strategies, strategy];
   }
-  get strategy() {
-    return this._strategy;
-  }
-  use() {
-    this._strategy.use();
+  getStrategy(name) {
+    return this._strategies.find(strategy => strategy._name === name);
   }
 }
 
-class GoldenStrategy {
-  use() {
-    console.log('use Golden strategy');
+class Strategy {
+  constructor(name, handler, hostElement) {
+    this._name = name;
+    this._handler = handler;
+    this._hostElement = hostElement;
   }
-}
-
-class SilverStrategy {
   use() {
-    console.log('use Silver strategy');
-  }
-}
-
-
-class BronzeStrategy {
-  use() {
-    console.log('use Bronze strategy');
+    this._handler(this._hostElement, this._name);
   }
 }
 
 const strategyPattern = {
+  goldenStrategyHandler(hostElement, strategyName) {
+    const node = document.createElement('li');
+    node.innerHTML = `using ${strategyName}`;
+    hostElement.appendChild(node);
+  },
 
+  silverStrategyHandler(hostElement, strategyName) {
+    const node = document.createElement('li');
+    node.innerHTML = `using ${strategyName}`;
+    hostElement.appendChild(node);
+  },
 
-  demo() {
-    let strategyManager = new StrategyManager();
-    const golden = new GoldenStrategy();
-    const silver = new SilverStrategy();
-    const bronze = new BronzeStrategy();
-    // setting at runtime
-    console.log('selecting first strategy...');
-    strategyManager = bronze;
-    strategyManager.use();
-    console.log('changing strategy at runtime...');
-    strategyManager = silver;
-    strategyManager.use();
-    console.log('changing strategy at runtime...');
-    strategyManager = golden;
-    strategyManager.use();
+  bronzeStrategyHandler(hostElement, strategyName) {
+    const node = document.createElement('li');
+    node.innerHTML = `using ${strategyName}`;
+    hostElement.appendChild(node);
+  },
+
+// Context/Client
+  demo(hostElement) {
+    const strategyManager = new StrategyManager();
+
+    const goldenStrategy = new Strategy('golden strategy', this.goldenStrategyHandler, hostElement);
+    const silverStrategy = new Strategy('silver strategy', this.silverStrategyHandler, hostElement);
+    const bronzeStrategy = new Strategy('bronze strategy', this.bronzeStrategyHandler, hostElement);
+
+    strategyManager.addStrategy(goldenStrategy);
+    strategyManager.addStrategy(silverStrategy);
+    strategyManager.addStrategy(bronzeStrategy);
+
+    const goldenStrategyImplementation = strategyManager.getStrategy('golden strategy');
+    const silverStrategyImplementation = strategyManager.getStrategy('silver strategy');
+    const bronzeStrategyImplementation = strategyManager.getStrategy('bronze strategy');
+
+    goldenStrategyImplementation.use();
+    silverStrategyImplementation.use();
+    bronzeStrategyImplementation.use();
   }
 };
 
