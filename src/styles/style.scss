@@ -1,44 +1,41 @@
-/* Here are example using scss */
-
 html {
   box-sizing: border-box;
   font-size: 62.5%;
-}
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #282c34;
-  color: #fff;
-  font-size: 1.6rem;
-  text-align: center;
-
-  & > * {
-    margin: 2rem;
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
 
-  header {
-    h1 {
-      font-size: 3.5rem;
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #282c34;
+    color: #fff;
+    font-size: 1.6rem;
+    text-align: center;
+
+    & > * {
+      margin: 2rem;
     }
-  }
 
-  section {
-    ul {
-      li {
-        list-style: square;
+    header {
+      h1 {
+        font-size: 3.5rem;
+      }
+    }
+
+    section {
+      ul {
+        li {
+          list-style: square;
+          text-align: left;
+        }
+      }
+      h2 {
         text-align: left;
       }
     }
-    h2 {
-      text-align: left;
-    }
   }
 }
-

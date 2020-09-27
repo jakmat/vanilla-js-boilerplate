@@ -1,3 +1,5 @@
+import { setElement } from "./addElement";
+
 /**
  * Strategy Pattern DEMO
  * ------------------------
@@ -29,31 +31,29 @@ class Strategy {
 }
 
 const strategyPattern = {
-  goldenStrategyHandler(hostElement, strategyName) {
-    const node = document.createElement('li');
+  goldenStrategyHandler(node, strategyName) {
     node.innerHTML = `using ${strategyName}`;
-    hostElement.appendChild(node);
   },
 
-  silverStrategyHandler(hostElement, strategyName) {
-    const node = document.createElement('li');
+  silverStrategyHandler(node, strategyName) {
     node.innerHTML = `using ${strategyName}`;
-    hostElement.appendChild(node);
   },
 
-  bronzeStrategyHandler(hostElement, strategyName) {
-    const node = document.createElement('li');
+  bronzeStrategyHandler(node, strategyName) {
     node.innerHTML = `using ${strategyName}`;
-    hostElement.appendChild(node);
   },
 
 // Context/Client
-  demo(hostElement) {
+  demo(listParentElement) {
     const strategyManager = new StrategyManager();
 
-    const goldenStrategy = new Strategy('golden strategy', this.goldenStrategyHandler, hostElement);
-    const silverStrategy = new Strategy('silver strategy', this.silverStrategyHandler, hostElement);
-    const bronzeStrategy = new Strategy('bronze strategy', this.bronzeStrategyHandler, hostElement);
+    const golderStrategyElement = setElement(listParentElement, 'li');
+    const silverStrategyElement = setElement(listParentElement, 'li');
+    const bronzeStrategyElement = setElement(listParentElement, 'li');
+
+    const goldenStrategy = new Strategy('golden strategy', this.goldenStrategyHandler, golderStrategyElement);
+    const silverStrategy = new Strategy('silver strategy', this.silverStrategyHandler, silverStrategyElement);
+    const bronzeStrategy = new Strategy('bronze strategy', this.bronzeStrategyHandler, bronzeStrategyElement);
 
     strategyManager.addStrategy(goldenStrategy);
     strategyManager.addStrategy(silverStrategy);
